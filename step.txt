@@ -1,0 +1,46 @@
+//building image docker
+docker-compose up -d
+
+//entering php container
+docker-compose exec php-fpm bash
+
+//go to tmp
+cd ../
+cd tmp
+
+//clone project
+git clone https://github.com/rartstudio/jobeet-symphony.git
+
+exit
+
+//entering container php
+docker-compose exec php-fpm bash
+
+//copy project tmp to application
+cp -aR /tmp/jobeet-symphony/. .
+
+//install package php
+composer install
+
+//create database
+bin/console doctrine:database:create --if-not-exists
+
+//running migration
+bin/console doctrine:migration:migrate
+
+//adding initial data
+bin/console doctrine:fixtures:load
+
+//install nodejs 13
+curl -sL https://deb.nodesource.com/setup_13.x | bash -
+apt-get install -y nodejs
+node -v
+npm -v
+
+npm install --force
+
+//adding tailwind compat
+npm install tailwindcss@npm:@tailwindcss/postcss7-compat @tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9
+
+//adding additional library
+npm install postcss-loader purgecss-webpack-plugin glob-all path

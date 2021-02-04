@@ -3,14 +3,17 @@
     <head>
         <title>{% block title %} Jobeet - Your best job board {% endblock %}</title>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
-        {% block stylesheets %}{% endblock %}
-        {% block javascripts %}{% endblock %}
-        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </head>
     <body>
         <nav class="flex">
-            <div>
-                <a href="{{path('job.list')}}">Jobeet</a>
+            <div class="bg-red-300">
+                <a href="{{path('job.list')}}" class="text-5xl">Jobeet</a>
             </div>
             <ul>
                 <li>

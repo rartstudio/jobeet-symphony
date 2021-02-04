@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %} Jobeet - Your best job board {% endblock %}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        {% block stylesheets %}{% endblock %}
+        {% block javascripts %}{% endblock %}
+        <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    </head>
+    <body>
+        <nav class="flex">
+            <div>
+                <a href="{{path('job.list')}}">Jobeet</a>
+            </div>
+            <ul>
+                <li>
+                    <div>
+                        <a>Post A Job</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <div class="container mx-auto">
+            {% block body %}{% endblock %}
+        </div>
+    </body>
+</html>

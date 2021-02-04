@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <table>
+        <tr>
+            <th>City</th>
+            <th>Position</th>
+            <th>Company</th>
+        </tr>
+        {% for job in jobs %}
+            <tr>
+                <td>{{ job.location}}</td>
+                <td>{{ job.position}}</td>
+                <td>{{ job.company}}</td>
+                <td>
+                    <a href="{{path('job.show',{id: job.id})}}">yuk</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

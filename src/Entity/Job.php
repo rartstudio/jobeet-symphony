@@ -5,7 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
  * @ORM\Table(name="jobs")
  * @ORM\HasLifecycleCallbacks()
  */
@@ -236,7 +236,7 @@ class Job
      */
     public function getLocation(): ?string
     {
-        return $this->position;
+        return $this->location;
     }
 
     /**
@@ -416,6 +416,11 @@ class Job
     {
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+
+        //adding expires at if user dont set it
+        if(!$this->expiresAt){
+            $this->expiresAt = (clone $this->createdAt)->modify('+30 days');
+        }
     }
 
     /**

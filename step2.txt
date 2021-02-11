@@ -1,0 +1,31 @@
+//building image docker
+docker-compose up -d
+
+//entering php container
+docker-compose exec php-fpm bash
+
+//go to tmp
+cd ../
+cd tmp
+mkdir jobeet
+cd jobeet
+
+//clone project
+git clone https://github.com/rartstudio/jobeet-symphony.git
+
+exit
+
+//entering container php
+docker-compose exec php-fpm bash
+
+//copy project tmp to application
+cp -aR /tmp/jobeet/jobeet-symphony/. .
+
+//create database
+bin/console doctrine:database:create --if-not-exists
+
+//running migration
+bin/console doctrine:migration:migrate
+
+//adding initial data
+bin/console doctrine:fixtures:load

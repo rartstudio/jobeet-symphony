@@ -7,7 +7,7 @@
         {% if job.logo %}
             <div class="media-left">
                 <a href="{{ job.url }}" target="_blank">
-                    <img class="media-object" style="width:100px; height:100px;" src="{{ asset(jobs_web_directory ~ '/' ~ job.logo.filename) }}">
+                    <img class="media-object" style="width:100px; height:100px;" src="{{ asset(jobs_web_directory ~ '/' ~ job.logo) }}">
                 </a>
             </div>
         {% endif %}

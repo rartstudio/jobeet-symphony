@@ -99,5 +99,42 @@ class JobController extends AbstractController
         ]);        
     }
 
+    /**
+     * Edit existing job entity
+     *
+     * @Route("/{token}/edit", name="job.edit", methods={"GET", "POST"}, requirements={"token" = "\w+"})
+     *
+     * @param Request $request
+     * @param Job $job
+     * @param EntityManagerInterface $em
+     *
+     * @return Response
+     */
+    public function edit(Request $request, Job $job, EntityManagerInterface $em, FileUploader $fileUploader) : Response
+    {
+        $form = $this->createForm(JobType::class, $job);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            /**
+             * @var UploadedFile|null $logoFile
+             */
+            $logoFile = $form->get('logo')->getData();
+            if($logoFile instanceOf UploadedFile){
+                $fileName  = $fileUploader->upload($logoFile);
+
+                $job->setLogo($fileName);
+            }
+
+            $em->persist($job);
+            $em->flush();
+
+            return $this->redirectToRoute('job.list');
+        }
+
+        return $this->render('job/edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
 
 }

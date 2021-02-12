@@ -46,7 +46,8 @@ class JobType extends AbstractType
                 'required' => false,
                 'constraints' => [
                     new Image()
-                ]
+                ],
+                'data_class' => null
             ])
             ->add('url', UrlType::class, [
                 'constraints' => [

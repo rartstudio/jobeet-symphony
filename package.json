@@ -16,13 +16,13 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "@tailwindcss/postcss7-compat": "^2.0.2",
+        "@tailwindcss/postcss7-compat": "^2.0.3",
         "autoprefixer": "^9.8.6",
         "glob-all": "^3.2.1",
         "path": "^0.12.7",
         "postcss": "^7.0.35",
         "postcss-loader": "^5.0.0",
         "purgecss-webpack-plugin": "^4.0.0",
-        "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"
+        "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
     }
 }

@@ -5,4 +5,7 @@ twig:
     exception_controller: null
     globals:
         max_jobs_on_homepage: '%max_jobs_on_homepage%'
+        jobs_web_directory: '%jobs_web_directory%'
+    form_themes:
+        - 'bootstrap_3_horizontal_layout.html.twig'
         

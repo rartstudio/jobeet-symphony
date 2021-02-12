@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\JobRepository")
@@ -189,7 +190,7 @@ class Job
     }
 
     /**
-     * @return string|null
+     * @return string|null|UploadedFile
      */
     public function getLogo(): ?string
     {
@@ -197,7 +198,7 @@ class Job
     }
 
     /**
-     * @param string $logo
+     * @param string|null|UploadedFile $logo
      * @return self
      */
     public function setLogo(string $logo): self

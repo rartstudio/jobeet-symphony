@@ -12,6 +12,7 @@ use App\Form\JobType;
 use App\Service\FileUploader;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
@@ -98,9 +99,8 @@ class JobController extends AbstractController
     public function show(Job $job): Response
     {
         return $this->render('job/show.html.twig',[
-            'job' => $job,
-            'hasControlAccess'=> true
-        ]);        
+            'job'=> $job
+        ]);     
     }
 
     /**
@@ -155,8 +155,50 @@ class JobController extends AbstractController
      */
     public function preview(Job $job): Response
     {
+        $deleteForm = $this->createDeleteForm($job);
         return $this->render('job/show.html.twig',[
-            'job'=> $job
+            'job'=> $job,
+            'hasControlAccess' => true,
+            'deleteForm' => $deleteForm
         ]);
+    }
+
+    /**
+     * creates a form to delete a job entity
+     * 
+     * @param Job $job
+     * @return FormInterface
+     */
+    private function createDeleteForm(Job $job): FormInterface
+    {
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('job.delete', [
+                'token' => $job->getToken()
+            ]))
+            ->setMethod('DELETE')
+            ->getForm();
+    }
+
+    /**
+     * Delete a Job Entity
+     * 
+     * @Route("/{token}/delete", name="job.delete", methods="DELETE", requirements={"token" = "\w+"})
+     *
+     * @param Request $request
+     * @param Job $job
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function delete(Request $request,Job $job, EntityManagerInterface $em): Response
+    {
+        $form = $this->createDeleteForm($job);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $em->remove($job);
+            $em->flush();
+        }
+
+        return $this->redirectToRoute('job.list');
     }
 }

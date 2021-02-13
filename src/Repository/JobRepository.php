@@ -20,7 +20,9 @@ class JobRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('j')
             ->where('j.expiresAt > :date')
+            ->andWhere('j.activated = :activated')
             ->setParameter('date',new \DateTime())
+            ->setParameter('activated',true)
             ->orderBy('j.expiresAt','DESC');
         
         if($categoryId){
@@ -30,24 +32,40 @@ class JobRepository extends EntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * 
+     *
+     * @param integer $id
+     * @return Job|null
+     */
     public function findActiveJob(int $id): ?Job
     {
         return $this->createQueryBuilder('j')
             ->where('j.id = :id')
             ->andWhere('j.expiresAt > :date')
+            ->andWhere('j.activated = :activated')
             ->setParameter('id',$id)
             ->setParameter('date',new \DateTime())
+            ->setParameter('activated',true)
             ->getQuery()
             ->getOneOrNullResult();
     }
 
+    /**
+     * Pagination
+     *
+     * @param Category $category
+     * @return AbstractQuery
+     */
     public function getPaginatedActiveJobsByCategoryQuery(Category $category): AbstractQuery
     {
         return $this->createQueryBuilder('j')
             ->where('j.category = :category')
             ->andWhere('j.expiresAt > :date')
+            ->andWhere('j.activated = :activated')
             ->setParameter('category', $category)
             ->setParameter('date', new \DateTime())
+            ->setParameter('activated',true)
             ->getQuery();
     }
 }

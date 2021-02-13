@@ -151,6 +151,7 @@ class JobController extends AbstractController
      *
      * @param Job $job
      * @return Response
+     * 
      */
     public function preview(Job $job): Response
     {

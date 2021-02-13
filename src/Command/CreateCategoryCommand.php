@@ -19,7 +19,10 @@ class CreateCategoryCommand extends Command
             ->setDescription('Creates a new category')
 
             //the full command description shown when running the command with the --help option
-            ->setHelp('This command allows you to add new category in db ...');
+            ->setHelp('This command allows you to add new category in db ...')
+
+            // configure an argument
+            ->addArgument('name', InputArgument::REQUIRED, 'The name of the category.');
     }
 
     /**
@@ -33,11 +36,6 @@ class CreateCategoryCommand extends Command
         //outputs multiple lines to the console (adding "\n" at the end of each line)
         $output->writeln(['Category Creator','=============','']);
 
-        //outputs a message followed by a "\n"
-        $output->writeln('Whoa!');
-
-        //outputs a message without adding a "\n" at the end of the line
-        $output->write('you are about to');
-        $output->write('create a category');
+        $output->writeln(sprintf('Name: %s',$input->getArgument('name')));
     }
 }
